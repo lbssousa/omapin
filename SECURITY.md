@@ -62,6 +62,5 @@ one of a limited number of tries.
 - The Assuan session, the dialog-reply parser and the `D`-line encoder are
   fuzzed with cargo-fuzz (`fuzz/`): on every pull request that touches the
   code, and for longer every week.
-- Releases are built from GPG-signed commits.
-  [omarchy-setup](https://github.com/lbssousa/omarchy-setup) verifies the
-  signature before building.
+- Releases are GPG-signed tags. Verify the signature
+  (`git verify-tag vX.Y.Z`) before building.
