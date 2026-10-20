@@ -16,7 +16,9 @@ were never tagged.
     `pinentry-omarchy`), plugin files under `/usr/share/omapin/plugin`;
   - socket: `$XDG_RUNTIME_DIR/omapin.sock`;
   - environment variables: `OMAPIN_SOCKET`, `OMAPIN_FALLBACK`;
-  - shell plugin id: `lbssousa.omapin`.
+  - shell plugin id: `lbssousa.omapin`;
+  - Wayland layer namespace of the dialog: `omapin` (was
+    `omarchy-pinentry`).
 
   To upgrade, remove the `~/.config/omarchy/plugins/lbssousa.pinentry`
   link, link and enable `lbssousa.omapin` and point `pinentry-program` in
