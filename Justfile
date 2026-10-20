@@ -50,3 +50,7 @@ link:
 # rustup in ~/.cargo, which pacman doesn't know about.
 pkg:
     cd packaging && makepkg -f --nodeps
+
+# Build the Nix package (flake.nix) into ./result, running the tests too.
+nix:
+    nix build -L

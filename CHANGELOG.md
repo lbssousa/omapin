@@ -8,6 +8,11 @@ were never tagged.
 
 ## [Unreleased]
 
+### Added
+- A Nix flake (`flake.nix`, `nix/package.nix`): `packages.<system>.default`,
+  `overlays.default`, a dev shell and `nix flake check`. It installs the
+  same files as the PKGBUILD (`just nix`).
+
 ## [0.3.0] - 2026-10-20
 
 ### Changed

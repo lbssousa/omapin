@@ -88,19 +88,36 @@ vulnerability. In short:
 
 ## Install
 
-On Arch/Omarchy, build and install the package:
+There are two packages, which install the same files under their prefix:
+the binary (`bin/omapin`) and the shell plugin (`share/omapin/plugin`).
+
+### Arch/Omarchy (PKGBUILD)
 
 ```sh
 just pkg                                  # packaging/omapin-*.pkg.tar.zst
 sudo pacman -U packaging/omapin-*.pkg.tar.zst
 ```
 
-Then, per user:
+The prefix is `/usr`. The package replaces `pinentry-omarchy`.
+
+### Nix (flake)
 
 ```sh
-ln -sfn /usr/share/omapin/plugin ~/.config/omarchy/plugins/lbssousa.omapin
+nix profile add github:lbssousa/omapin
+```
+
+The prefix is `~/.nix-profile`. In a flake, use `packages.<system>.default`
+or the `overlays.default` overlay (`pkgs.omapin`). The fallback
+pinentries come from nixpkgs (`pinentry-gnome3`, `pinentry-curses`).
+
+### Per user
+
+With `prefix` set to `/usr` or `$HOME/.nix-profile`:
+
+```sh
+ln -sfn "$prefix/share/omapin/plugin" ~/.config/omarchy/plugins/lbssousa.omapin
 omarchy-shell shell enablePlugin lbssousa.omapin '{}'
-echo 'pinentry-program /usr/bin/omapin' >> ~/.gnupg/gpg-agent.conf
+echo "pinentry-program $prefix/bin/omapin" >> ~/.gnupg/gpg-agent.conf
 gpgconf --reload gpg-agent
 ```
 
@@ -135,6 +152,7 @@ deployed: check it out and verify it against the maintainer's key
 | `just try` | Sends a sample `GETPIN` through the `just dev` instance |
 | `just link` | Loads this checkout's plugin in the real shell (restarts omarchy-shell) |
 | `just pkg` | Builds the Arch package |
+| `just nix` | Builds the Nix package into `./result` (runs the tests too) |
 
 omarchy-shell doesn't reload a `keepLoaded` service when its files change,
 and its file watcher doesn't follow the plugin symlink. Iterate with

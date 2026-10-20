@@ -2,3 +2,4 @@
 /packaging/*
 !/packaging/PKGBUILD
 !/packaging/omapin.install
+/result
