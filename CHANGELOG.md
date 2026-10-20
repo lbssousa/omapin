@@ -8,6 +8,12 @@ were never tagged.
 
 ## [Unreleased]
 
+### Added
+- Flake modules for NixOS (`nixosModules.default`) and Home Manager
+  (`homeModules.default`, also as `homeManagerModules`), both as
+  `programs.omapin`. They install the package and do the README's
+  per-user steps.
+
 ## [0.3.1] - 2026-10-20
 
 ### Added
