@@ -1,5 +1,5 @@
 [package]
-name = "pinentry-omarchy"
+name = "omapin"
 version = "0.2.1"
 edition = "2024"
 description = "GnuPG pinentry that asks through an Omarchy shell (Quickshell) dialog styled like the polkit agent"

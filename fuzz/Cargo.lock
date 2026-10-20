@@ -122,8 +122,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "pinentry-omarchy"
-version = "0.2.0"
+name = "omapin"
+version = "0.2.1"
 dependencies = [
  "nix",
  "serde",
@@ -132,11 +132,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "pinentry-omarchy-fuzz"
+name = "omapin-fuzz"
 version = "0.0.0"
 dependencies = [
  "libfuzzer-sys",
- "pinentry-omarchy",
+ "omapin",
  "serde_json",
 ]
 

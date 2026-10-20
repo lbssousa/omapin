@@ -5,7 +5,7 @@
 #![no_main]
 
 use libfuzzer_sys::fuzz_target;
-use pinentry_omarchy::assuan::{MAX_RESPONSE_LINE, Writer, percent_decode_into};
+use omapin::assuan::{MAX_RESPONSE_LINE, Writer, percent_decode_into};
 
 fuzz_target!(|pin: &[u8]| {
     let mut out = Vec::new();

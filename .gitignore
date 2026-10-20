@@ -1,4 +1,4 @@
 /target
 /packaging/*
 !/packaging/PKGBUILD
-!/packaging/pinentry-omarchy.install
+!/packaging/omapin.install
