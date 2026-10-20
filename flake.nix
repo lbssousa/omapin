@@ -22,6 +22,18 @@
         omapin = final.callPackage ./nix/package.nix { };
       };
 
+      # programs.omapin, for NixOS and for Home Manager.
+      nixosModules = {
+        omapin = ./nix/nixos-module.nix;
+        default = self.nixosModules.omapin;
+      };
+      homeModules = {
+        omapin = ./nix/home-module.nix;
+        default = self.homeModules.omapin;
+      };
+      # The older name of homeModules.
+      homeManagerModules = self.homeModules;
+
       # Building the package runs the test suite (cargo test).
       checks = forAllSystems (pkgs: {
         inherit (self.packages.${pkgs.stdenv.hostPlatform.system}) omapin;

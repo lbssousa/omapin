@@ -110,6 +110,30 @@ The prefix is `~/.nix-profile`. In a flake, use `packages.<system>.default`
 or the `overlays.default` overlay (`pkgs.omapin`). The fallback
 pinentries come from nixpkgs (`pinentry-gnome3`, `pinentry-curses`).
 
+The flake also has modules that do the per-user steps below, both as
+`programs.omapin`:
+
+- `homeModules.default` (Home Manager, also standalone on Omarchy):
+  installs the package, links the plugin into
+  `~/.config/omarchy/plugins/`, points
+  `services.gpg-agent.pinentry.package` at it (with
+  `services.gpg-agent.enable`), and enables the plugin in the running
+  shell on activation (`programs.omapin.enablePlugin`).
+- `nixosModules.default`: installs the package, points
+  `programs.gnupg.agent.pinentryPackage` at it (with
+  `programs.gnupg.agent.enable`), and links the plugin for every user
+  (`systemd.user.tmpfiles`). Enable the plugin in the shell yourself, or
+  with the Home Manager module.
+
+```nix
+{
+  inputs.omapin.url = "github:lbssousa/omapin";
+  # Home Manager:
+  #   imports = [ inputs.omapin.homeModules.default ];
+  #   programs.omapin.enable = true;
+}
+```
+
 ### Per user
 
 With `prefix` set to `/usr` or `$HOME/.nix-profile`:
