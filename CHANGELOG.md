@@ -8,6 +8,8 @@ were never tagged.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-10-20
+
 ### Added
 - A Nix flake (`flake.nix`, `nix/package.nix`): `packages.<system>.default`,
   `overlays.default`, a dev shell and `nix flake check`. It installs the
@@ -110,6 +112,7 @@ externally.
   shell it falls back to pinentry-gnome3 or pinentry-curses.
 - Arch package (`packaging/PKGBUILD`).
 
-[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/lbssousa/omapin/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/lbssousa/omapin/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/lbssousa/omapin/releases/tag/v0.2.1
