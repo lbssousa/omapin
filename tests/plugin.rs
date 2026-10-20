@@ -24,7 +24,7 @@ fn start_shell(socket: &Path) -> Shell {
     let child = Command::new("quickshell")
         .arg("-p")
         .arg(dev)
-        .env("PINENTRY_OMARCHY_SOCKET", socket)
+        .env("OMAPIN_SOCKET", socket)
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .spawn()

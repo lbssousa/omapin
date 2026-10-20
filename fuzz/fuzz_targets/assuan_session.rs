@@ -14,9 +14,9 @@ use std::os::unix::net::UnixStream;
 use std::sync::Once;
 
 use libfuzzer_sys::fuzz_target;
-use pinentry_omarchy::assuan::MAX_RESPONSE_LINE;
-use pinentry_omarchy::session;
-use pinentry_omarchy::shell::Dialog;
+use omapin::assuan::MAX_RESPONSE_LINE;
+use omapin::session;
+use omapin::shell::Dialog;
 
 static NO_SHELL: Once = Once::new();
 
@@ -33,8 +33,8 @@ fuzz_target!(|input: &[u8]| {
         // from any other thread.
         unsafe {
             std::env::set_var(
-                "PINENTRY_OMARCHY_SOCKET",
-                "/nonexistent/pinentry-omarchy-fuzz.sock",
+                "OMAPIN_SOCKET",
+                "/nonexistent/omapin-fuzz.sock",
             )
         };
     });
