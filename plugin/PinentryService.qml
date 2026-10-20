@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 
-// Answers pinentry-omarchy over $XDG_RUNTIME_DIR/pinentry-omarchy.sock:
+// Answers omapin over $XDG_RUNTIME_DIR/omapin.sock:
 // one NDJSON request line in, one response line out, then the plugin
 // closes the connection (closing it here rather than in the client keeps
 // Quickshell from logging a PeerClosedError). A client that disconnects
@@ -77,7 +77,7 @@ Item {
 
   SocketServer {
     active: true
-    path: Quickshell.env("PINENTRY_OMARCHY_SOCKET") || (Quickshell.env("XDG_RUNTIME_DIR") + "/pinentry-omarchy.sock")
+    path: Quickshell.env("OMAPIN_SOCKET") || (Quickshell.env("XDG_RUNTIME_DIR") + "/omapin.sock")
     handler: Socket {
       id: conn
       property bool handled: false

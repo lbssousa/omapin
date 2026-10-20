@@ -8,6 +8,21 @@ were never tagged.
 
 ## [Unreleased]
 
+### Changed
+- Renamed from pinentry-omarchy to omapin, along with the GitHub
+  repository (`lbssousa/omapin`; the old URL redirects). Everything named
+  after the project changes with it:
+  - binary and package: `/usr/bin/omapin`, `omapin` (the package replaces
+    `pinentry-omarchy`), plugin files under `/usr/share/omapin/plugin`;
+  - socket: `$XDG_RUNTIME_DIR/omapin.sock`;
+  - environment variables: `OMAPIN_SOCKET`, `OMAPIN_FALLBACK`;
+  - shell plugin id: `lbssousa.omapin`.
+
+  To upgrade, remove the `~/.config/omarchy/plugins/lbssousa.pinentry`
+  link, link and enable `lbssousa.omapin` and point `pinentry-program` in
+  `~/.gnupg/gpg-agent.conf` at `/usr/bin/omapin` (see the README's
+  "Install" section).
+
 ### Security
 - The crate now forbids `unsafe` code (`#![forbid(unsafe_code)]`).
 
@@ -86,5 +101,5 @@ externally.
   shell it falls back to pinentry-gnome3 or pinentry-curses.
 - Arch package (`packaging/PKGBUILD`).
 
-[Unreleased]: https://github.com/lbssousa/pinentry-omarchy/compare/v0.2.1...HEAD
-[0.2.1]: https://github.com/lbssousa/pinentry-omarchy/releases/tag/v0.2.1
+[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/lbssousa/omapin/releases/tag/v0.2.1

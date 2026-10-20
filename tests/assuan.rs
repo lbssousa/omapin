@@ -9,7 +9,7 @@ use std::sync::mpsc;
 use std::thread;
 use std::time::{Duration, Instant};
 
-const BIN: &str = env!("CARGO_BIN_EXE_pinentry-omarchy");
+const BIN: &str = env!("CARGO_BIN_EXE_omapin");
 
 /// What the fake dialog does with the next request.
 enum Answer {
@@ -87,7 +87,7 @@ fn fake_dialog(answers: Vec<Answer>) -> FakeDialog {
 
 fn run_with(socket: &Path, script: &[u8]) -> Output {
     let mut child = Command::new(BIN)
-        .env("PINENTRY_OMARCHY_SOCKET", socket)
+        .env("OMAPIN_SOCKET", socket)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
@@ -390,8 +390,8 @@ fn falls_back_when_the_socket_is_missing() {
     let dir = tempfile::tempdir().unwrap();
     let out = Command::new(BIN)
         .args(["--display", ":0"])
-        .env("PINENTRY_OMARCHY_SOCKET", dir.path().join("missing"))
-        .env("PINENTRY_OMARCHY_FALLBACK", fallback_script(dir.path()))
+        .env("OMAPIN_SOCKET", dir.path().join("missing"))
+        .env("OMAPIN_FALLBACK", fallback_script(dir.path()))
         .output()
         .unwrap();
     assert_eq!(
@@ -405,8 +405,8 @@ fn falls_back_outside_a_wayland_session() {
     let dir = tempfile::tempdir().unwrap();
     let out = Command::new(BIN)
         .env_remove("WAYLAND_DISPLAY")
-        .env_remove("PINENTRY_OMARCHY_SOCKET")
-        .env("PINENTRY_OMARCHY_FALLBACK", fallback_script(dir.path()))
+        .env_remove("OMAPIN_SOCKET")
+        .env("OMAPIN_FALLBACK", fallback_script(dir.path()))
         .output()
         .unwrap();
     assert_eq!(String::from_utf8(out.stdout).unwrap(), "OK fallback \n");
