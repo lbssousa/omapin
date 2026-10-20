@@ -2,6 +2,7 @@
 #
 # Builds from the repository this PKGBUILD lives in (the parent of
 # $startdir), so `makepkg` in packaging/ packages the working tree as is.
+# nix/package.nix (flake.nix) installs the same files.
 
 pkgname=omapin
 pkgver=0.3.0
