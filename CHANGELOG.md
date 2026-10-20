@@ -8,6 +8,8 @@ were never tagged.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-20
+
 ### Changed
 - Renamed from pinentry-omarchy to omapin, along with the GitHub
   repository (`lbssousa/omapin`; the old URL redirects). Everything named
@@ -103,5 +105,6 @@ externally.
   shell it falls back to pinentry-gnome3 or pinentry-curses.
 - Arch package (`packaging/PKGBUILD`).
 
-[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/lbssousa/omapin/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/lbssousa/omapin/releases/tag/v0.2.1
