@@ -5,7 +5,7 @@
 #![no_main]
 
 use libfuzzer_sys::fuzz_target;
-use pinentry_omarchy::shell::{MAX_RESPONSE_BYTES, read_response};
+use omapin::shell::{MAX_RESPONSE_BYTES, read_response};
 
 fuzz_target!(|data: &[u8]| {
     let Ok(response) = read_response(&mut &data[..]) else {

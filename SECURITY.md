@@ -7,14 +7,14 @@ Only the latest release on `main` gets security fixes.
 ## Reporting a vulnerability
 
 Please report vulnerabilities privately through GitHub's
-[private vulnerability reporting](https://github.com/lbssousa/pinentry-omarchy/security/advisories/new),
-not in a public issue. Include the version (`pinentry-omarchy`'s
-`GETINFO version`, or `pacman -Q pinentry-omarchy`), what you did, and
+[private vulnerability reporting](https://github.com/lbssousa/omapin/security/advisories/new),
+not in a public issue. Include the version (`omapin`'s
+`GETINFO version`, or `pacman -Q omapin`), what you did, and
 what happened. You should get an answer within a week.
 
 ## Threat model
 
-pinentry-omarchy asks for PINs and passphrases on behalf of gpg-agent.
+omapin asks for PINs and passphrases on behalf of gpg-agent.
 The OpenPGP card's PIN (e.g. a Yubikey's) is the main asset. A PIN that
 reaches the card corrupted also costs something: each wrong PIN uses up
 one of a limited number of tries.
@@ -62,6 +62,5 @@ one of a limited number of tries.
 - The Assuan session, the dialog-reply parser and the `D`-line encoder are
   fuzzed with cargo-fuzz (`fuzz/`): on every pull request that touches the
   code, and for longer every week.
-- Releases are built from GPG-signed commits.
-  [omarchy-setup](https://github.com/lbssousa/omarchy-setup) verifies the
-  signature before building.
+- Releases are GPG-signed tags. Verify the signature
+  (`git verify-tag vX.Y.Z`) before building.

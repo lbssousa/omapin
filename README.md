@@ -1,7 +1,7 @@
-# pinentry-omarchy
+# omapin
 
-[![ci](https://github.com/lbssousa/pinentry-omarchy/actions/workflows/ci.yml/badge.svg)](https://github.com/lbssousa/pinentry-omarchy/actions/workflows/ci.yml)
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/lbssousa/pinentry-omarchy/badge)](https://scorecard.dev/viewer/?uri=github.com/lbssousa/pinentry-omarchy)
+[![ci](https://github.com/lbssousa/omapin/actions/workflows/ci.yml/badge.svg)](https://github.com/lbssousa/omapin/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/lbssousa/omapin/badge)](https://scorecard.dev/viewer/?uri=github.com/lbssousa/omapin)
 
 A GnuPG [pinentry](https://www.gnupg.org/related_software/pinentry/) for
 [Omarchy](https://omarchy.org/) that asks for PINs and passphrases in the
@@ -9,22 +9,27 @@ same overlay dialog as the shell's polkit agent: same layer, scrim, card,
 fonts, `[polkit]` theme colours and failure shake, following theme changes
 live.
 
+omapin was called **pinentry-omarchy** until 0.2.1. The binary, package,
+socket, environment variables (`PINENTRY_OMARCHY_*` → `OMAPIN_*`) and
+shell plugin (`lbssousa.pinentry` → `lbssousa.omapin`) were renamed with
+it; see [CHANGELOG.md](CHANGELOG.md) for upgrading.
+
 ![A GnuPG PIN prompt drawn as a full-screen overlay dialog, in the Tokyo Night theme](docs/dialog.png)
 
 ## How it works
 
 ```
-gpg-agent ──Assuan (stdin/stdout)──▶ pinentry-omarchy (Rust)
+gpg-agent ──Assuan (stdin/stdout)──▶ omapin (Rust)
                                         │ one NDJSON line each way
                                         ▼
-            $XDG_RUNTIME_DIR/pinentry-omarchy.sock
+            $XDG_RUNTIME_DIR/omapin.sock
                                         │
-                  plugin lbssousa.pinentry (service) inside omarchy-shell
+                  plugin lbssousa.omapin (service) inside omarchy-shell
                                         │
                                   overlay dialog
 ```
 
-- **`pinentry-omarchy`** (`src/`) speaks the pinentry Assuan protocol to
+- **`omapin`** (`src/`) speaks the pinentry Assuan protocol to
   gpg-agent: `GETPIN` (with `SETREPEAT`), `CONFIRM` (incl.
   `--one-button`), `MESSAGE`, the `SET*` texts and labels, `SETTIMEOUT`,
   `GETINFO`. For each prompt it sends the request over a connection to
@@ -41,7 +46,7 @@ gpg-agent ──Assuan (stdin/stdout)──▶ pinentry-omarchy (Rust)
 - **Fallback:** if there's no Wayland session or the plugin isn't
   listening when the pinentry starts, it `exec`s `pinentry-gnome3` (or
   `pinentry-curses` without a display) with the same arguments, before
-  saying anything to gpg-agent. `PINENTRY_OMARCHY_FALLBACK` picks another
+  saying anything to gpg-agent. `OMAPIN_FALLBACK` picks another
   program. If the shell goes away in the middle of a session, the pending
   prompt counts as cancelled.
 
@@ -86,29 +91,26 @@ vulnerability. In short:
 On Arch/Omarchy, build and install the package:
 
 ```sh
-just pkg                                  # packaging/pinentry-omarchy-*.pkg.tar.zst
-sudo pacman -U packaging/pinentry-omarchy-*.pkg.tar.zst
+just pkg                                  # packaging/omapin-*.pkg.tar.zst
+sudo pacman -U packaging/omapin-*.pkg.tar.zst
 ```
 
 Then, per user:
 
 ```sh
-ln -sfn /usr/share/pinentry-omarchy/plugin ~/.config/omarchy/plugins/lbssousa.pinentry
-omarchy-shell shell enablePlugin lbssousa.pinentry '{}'
-echo 'pinentry-program /usr/bin/pinentry-omarchy' >> ~/.gnupg/gpg-agent.conf
+ln -sfn /usr/share/omapin/plugin ~/.config/omarchy/plugins/lbssousa.omapin
+omarchy-shell shell enablePlugin lbssousa.omapin '{}'
+echo 'pinentry-program /usr/bin/omapin' >> ~/.gnupg/gpg-agent.conf
 gpgconf --reload gpg-agent
 ```
-
-[omarchy-setup](https://github.com/lbssousa/omarchy-setup) automates all
-of this (`just pinentry`).
 
 ## Releases
 
 `main` only takes squash-merged pull requests, which GitHub signs with its
 own key. A release is therefore a **GPG-signed tag** made by the
-maintainer on the merged commit. That tag, not `main`, is what gets
-deployed: omarchy-setup checks out the tag and verifies it against the
-maintainer's key before building.
+maintainer on the merged commit. That tag, not `main`, is what should be
+deployed: check it out and verify it against the maintainer's key
+(`git verify-tag vX.Y.Z`) before building.
 
 1. Open a PR that bumps the version in `Cargo.toml` (then run
    `cargo update -w`), `packaging/PKGBUILD` and `plugin/manifest.json`.
@@ -118,11 +120,9 @@ maintainer's key before building.
 2. Tag the merge commit and push the tag:
    ```sh
    git switch main && git pull
-   git tag -s vX.Y.Z -m "pinentry-omarchy X.Y.Z"
+   git tag -s vX.Y.Z -m "omapin X.Y.Z"
    git push origin vX.Y.Z
    ```
-3. In omarchy-setup, set `pinentry_omarchy_ref` to the tag and run
-   `just pinentry`.
 
 ## Development
 
@@ -142,7 +142,7 @@ and its file watcher doesn't follow the plugin symlink. Iterate with
 
 ## Feedback and contributing
 
-- **Bugs and feature requests:** [GitHub issues](https://github.com/lbssousa/pinentry-omarchy/issues).
+- **Bugs and feature requests:** [GitHub issues](https://github.com/lbssousa/omapin/issues).
 - **Security vulnerabilities:** report them privately, as described in
   [SECURITY.md](SECURITY.md).
 - **Contributions:** pull requests are welcome. See

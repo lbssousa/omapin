@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "id": "lbssousa.pinentry",
-  "name": "Pinentry",
+  "id": "lbssousa.omapin",
+  "name": "Omapin",
   "version": "0.2.1",
   "author": "Laércio de Sousa",
   "description": "Theme-aware GnuPG PIN/passphrase dialog, styled like the polkit agent.",
