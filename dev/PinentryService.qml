@@ -1,1 +1,0 @@
-../plugin/PinentryService.qml

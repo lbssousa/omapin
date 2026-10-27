@@ -14,7 +14,7 @@ socket, environment variables (`PINENTRY_OMARCHY_*` → `OMAPIN_*`) and
 shell plugin (`lbssousa.pinentry` → `lbssousa.omapin`) were renamed with
 it; see [CHANGELOG.md](CHANGELOG.md) for upgrading.
 
-![A GnuPG PIN prompt drawn as a full-screen overlay dialog, in the Tokyo Night theme](docs/dialog.png)
+![A GnuPG PIN prompt drawn as a full-screen overlay dialog, in the Tokyo Night theme](preview.png)
 
 ## How it works
 
@@ -37,7 +37,8 @@ gpg-agent ──Assuan (stdin/stdout)──▶ omapin (Rust)
   relays the answer. The connection opened at startup to check that the
   plugin is up carries the first prompt; the plugin closes each connection
   after answering.
-- **The plugin** (`plugin/`) is a third-party Omarchy shell plugin of kind
+- **The plugin** (`manifest.json` and the QML files at the repository
+  root) is a third-party Omarchy shell plugin of kind
   `service`. It reuses the shell's own `qs.Commons` (`Color`, `Style`,
   `Border`) and `qs.Ui` (`BorderSurface`, `Button`) instead of copying
   styles. One request is served at a time; a second one gets `busy`. A
@@ -88,8 +89,10 @@ vulnerability. In short:
 
 ## Install
 
-There are two packages, which install the same files under their prefix:
-the binary (`bin/omapin`) and the shell plugin (`share/omapin/plugin`).
+The pinentry needs both halves: the `omapin` binary, which gpg-agent runs,
+and the shell plugin. There are two packages, which install the same files
+under their prefix: the binary (`bin/omapin`) and the shell plugin
+(`share/omapin/plugin`). Install one of them, then do the per-user steps.
 
 ### Arch/Omarchy (PKGBUILD)
 
@@ -145,6 +148,34 @@ echo "pinentry-program $prefix/bin/omapin" >> ~/.gnupg/gpg-agent.conf
 gpgconf --reload gpg-agent
 ```
 
+### The plugin alone
+
+The repository root is also the plugin, so the Omarchy plugin marketplace
+and `omarchy plugin add` can install it:
+
+```sh
+omarchy plugin add https://github.com/lbssousa/omapin.git --enable
+```
+
+That installs only the dialog: it still needs the `omapin` binary from one
+of the packages above, and the `pinentry-program` line. Use either this or
+the package's link in `~/.config/omarchy/plugins/lbssousa.omapin`, not
+both. Update with `omarchy plugin update lbssousa.omapin`.
+
+## Remove
+
+Undo the per-user steps, then remove the package:
+
+```sh
+sed -i '\|^pinentry-program .*/omapin$|d' ~/.gnupg/gpg-agent.conf
+gpgconf --reload gpg-agent
+omarchy plugin remove lbssousa.omapin   # unlinks the package's plugin, or deletes the cloned one
+sudo pacman -R omapin                    # or: nix profile remove omapin
+```
+
+With the flake modules, set `programs.omapin.enable = false` and switch
+instead. gpg-agent goes back to its default pinentry.
+
 ## Releases
 
 `main` only takes squash-merged pull requests, which GitHub signs with its
@@ -154,7 +185,7 @@ deployed: check it out and verify it against the maintainer's key
 (`git verify-tag vX.Y.Z`) before building.
 
 1. Open a PR that bumps the version in `Cargo.toml` (then run
-   `cargo update -w`), `packaging/PKGBUILD` and `plugin/manifest.json`.
+   `cargo update -w`), `packaging/PKGBUILD` and `manifest.json`.
    The same PR turns the "Unreleased" section of
    [CHANGELOG.md](CHANGELOG.md) into the new version's release notes.
    Merge it.
@@ -172,7 +203,7 @@ deployed: check it out and verify it against the maintainer's key
 | `just test` | Unit tests, integration tests against a fake dialog, `cargo fmt --check` and clippy |
 | `just test-plugin` | Protocol tests against the real QML plugin in a throwaway Quickshell instance (needs the Wayland session; dialogs flash on screen) |
 | `just fuzz [target] [secs]` | Fuzzes the Assuan session, the dialog-reply parser or the `D`-line encoder with cargo-fuzz (needs nightly Rust and `cargo install cargo-fuzz`) |
-| `just dev` | Runs the dialog in a separate Quickshell instance (`dev/`, which links the shell's `Commons`/`Ui`) on its own socket |
+| `just dev` | Runs the dialog in a separate Quickshell instance on its own socket (from `dev/shell.qml`, built in a temporary folder that links the plugin's QML and the shell's `Commons`/`Ui`; the checkout carries no symlinks, which plugins may not have) |
 | `just try` | Sends a sample `GETPIN` through the `just dev` instance |
 | `just link` | Loads this checkout's plugin in the real shell (restarts omarchy-shell) |
 | `just pkg` | Builds the Arch package |

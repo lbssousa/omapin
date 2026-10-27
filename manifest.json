@@ -4,7 +4,19 @@
   "name": "Omapin",
   "version": "0.3.1",
   "author": "Laércio de Sousa",
+  "license": "MIT",
   "description": "Theme-aware GnuPG PIN/passphrase dialog, styled like the polkit agent.",
+  "homepage": "https://github.com/lbssousa/omapin",
+  "repository": "https://github.com/lbssousa/omapin",
+  "keywords": [
+    "gnupg",
+    "gpg",
+    "pinentry",
+    "pin",
+    "passphrase",
+    "yubikey",
+    "security"
+  ],
   "kinds": [
     "service"
   ],

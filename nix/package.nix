@@ -20,7 +20,9 @@ rustPlatform.buildRustPackage {
       ../Cargo.lock
       ../src
       ../tests
-      ../plugin
+      ../manifest.json
+      ../PinentryDialog.qml
+      ../PinentryService.qml
     ];
   };
 
@@ -35,7 +37,7 @@ rustPlatform.buildRustPackage {
   '';
 
   postInstall = ''
-    install -Dm644 -t $out/share/omapin/plugin plugin/manifest.json plugin/*.qml
+    install -Dm644 -t $out/share/omapin/plugin manifest.json PinentryDialog.qml PinentryService.qml
   '';
 
   meta = {
