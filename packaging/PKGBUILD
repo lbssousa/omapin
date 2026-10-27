@@ -40,7 +40,7 @@ check() {
 package() {
   _srcroot
   install -Dm755 "$srcdir/target/release/omapin" "$pkgdir/usr/bin/omapin"
-  install -Dm644 -t "$pkgdir/usr/share/omapin/plugin" plugin/manifest.json plugin/*.qml
+  install -Dm644 -t "$pkgdir/usr/share/omapin/plugin" manifest.json PinentryDialog.qml PinentryService.qml
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
 }
