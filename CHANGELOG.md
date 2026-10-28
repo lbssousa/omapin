@@ -8,6 +8,8 @@ were never tagged.
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-28
+
 ### Changed
 - The Arch package installs only the `omapin` binary, no longer a copy of
   the shell plugin in `/usr/share/omapin/plugin`: on Omarchy the plugin
@@ -143,7 +145,8 @@ externally.
   shell it falls back to pinentry-gnome3 or pinentry-curses.
 - Arch package (`packaging/PKGBUILD`).
 
-[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/lbssousa/omapin/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/lbssousa/omapin/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/lbssousa/omapin/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/lbssousa/omapin/compare/v0.2.1...v0.3.0

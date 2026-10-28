@@ -1,6 +1,6 @@
 [package]
 name = "omapin"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2024"
 description = "GnuPG pinentry that asks through an Omarchy shell (Quickshell) dialog styled like the polkit agent"
 license = "MIT"
