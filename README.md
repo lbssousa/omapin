@@ -90,9 +90,11 @@ vulnerability. In short:
 ## Install
 
 The pinentry needs both halves: the `omapin` binary, which gpg-agent runs,
-and the shell plugin. There are two packages, which install the same files
-under their prefix: the binary (`bin/omapin`) and the shell plugin
-(`share/omapin/plugin`). Install one of them, then do the per-user steps.
+and the shell plugin. The Arch package installs only the binary
+(`bin/omapin`): on Omarchy the plugin comes from the Omarchy plugin
+marketplace (see [The plugin](#the-plugin)). The Nix package installs
+both, the plugin in `share/omapin/plugin`, which the flake's modules link.
+Install one of them, then do the per-user steps.
 
 ### Arch/Omarchy (PKGBUILD)
 
@@ -142,13 +144,12 @@ The flake also has modules that do the per-user steps below, both as
 With `prefix` set to `/usr` or `$HOME/.nix-profile`:
 
 ```sh
-ln -sfn "$prefix/share/omapin/plugin" ~/.config/omarchy/plugins/lbssousa.omapin
-omarchy-shell shell enablePlugin lbssousa.omapin '{}'
+omarchy plugin add https://github.com/lbssousa/omapin.git --enable   # the plugin, see below
 echo "pinentry-program $prefix/bin/omapin" >> ~/.gnupg/gpg-agent.conf
 gpgconf --reload gpg-agent
 ```
 
-### The plugin alone
+### The plugin
 
 The repository root is also the plugin, so the Omarchy plugin marketplace
 and `omarchy plugin add` can install it:
@@ -158,9 +159,9 @@ omarchy plugin add https://github.com/lbssousa/omapin.git --enable
 ```
 
 That installs only the dialog: it still needs the `omapin` binary from one
-of the packages above, and the `pinentry-program` line. Use either this or
-the package's link in `~/.config/omarchy/plugins/lbssousa.omapin`, not
-both. Update with `omarchy plugin update lbssousa.omapin`.
+of the packages above, and the `pinentry-program` line. With the Nix
+package, link its `share/omapin/plugin` there instead (the flake's modules
+do), not both. Update with `omarchy plugin update lbssousa.omapin`.
 
 ## Remove
 
@@ -169,7 +170,7 @@ Undo the per-user steps, then remove the package:
 ```sh
 sed -i '\|^pinentry-program .*/omapin$|d' ~/.gnupg/gpg-agent.conf
 gpgconf --reload gpg-agent
-omarchy plugin remove lbssousa.omapin   # unlinks the package's plugin, or deletes the cloned one
+omarchy plugin remove lbssousa.omapin   # deletes the cloned plugin, or unlinks the Nix one
 sudo pacman -R omapin                    # or: nix profile remove omapin
 ```
 

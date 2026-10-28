@@ -1,13 +1,13 @@
 post_install() {
   cat <<'EOF'
-==> The shell plugin is not enabled per user automatically. For each user:
-      ln -sfn /usr/share/omapin/plugin ~/.config/omarchy/plugins/lbssousa.omapin
-      omarchy-shell shell enablePlugin lbssousa.omapin '{}'
+==> This package is only the binary. For each user, install the shell
+    plugin from the Omarchy plugin marketplace and set omapin up:
+      omarchy plugin add https://github.com/lbssousa/omapin.git --enable
       echo 'pinentry-program /usr/bin/omapin' >> ~/.gnupg/gpg-agent.conf
       gpgconf --reload gpg-agent
 EOF
 }
 
 post_upgrade() {
-  echo '==> Restart the shell (omarchy-restart-shell) to load the updated dialog.'
+  echo '==> Update the shell plugin too: omarchy plugin update lbssousa.omapin'
 }
