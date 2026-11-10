@@ -8,6 +8,12 @@ were never tagged.
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-11-10
+
+### Changed
+- Set the dialog's Wayland layer namespace to `omarchy-polkit` so Hyprland
+  applies background blur and darkening, matching the polkit agent dialog.
+
 ## [0.4.1] - 2026-10-28
 
 ### Changed
@@ -145,7 +151,8 @@ externally.
   shell it falls back to pinentry-gnome3 or pinentry-curses.
 - Arch package (`packaging/PKGBUILD`).
 
-[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/lbssousa/omapin/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/lbssousa/omapin/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/lbssousa/omapin/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/lbssousa/omapin/compare/v0.3.0...v0.3.1
