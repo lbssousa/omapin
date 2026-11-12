@@ -8,6 +8,26 @@ were never tagged.
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-11-12
+
+### Security
+- The dialog's fields no longer let Qt read the clipboard. Qt 6.12.0 (what
+  Arch ships) has every writable `TextInput` read the full clipboard text
+  whenever the clipboard changes, without a paste, and a paste reads it
+  synchronously too; both reads have no size cap, so another Wayland
+  client offering oversized or endless text could stall the whole shell.
+  The fields are now read-only, which turns off every clipboard path
+  (automatic reads, the paste keys, middle click), and `FieldEditor.js`
+  does the typing. Pasting into the dialog is no longer possible.
+  Reported in the Omarchy plugin marketplace review (omacom/omarchy-plugin-marketplace#14649).
+
+### Changed
+- A read-only field gets no input method, so dead keys are composed by
+  the field itself: a dead key and a letter make the accented letter, a
+  dead key and Space (or the dead key twice) the accent alone, and ´ + c
+  is ç in Portuguese locales. Input method scripts (CJK and others) remain
+  unavailable, as in any password field.
+
 ## [0.4.2] - 2026-11-10
 
 ### Changed
@@ -151,7 +171,8 @@ externally.
   shell it falls back to pinentry-gnome3 or pinentry-curses.
 - Arch package (`packaging/PKGBUILD`).
 
-[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/lbssousa/omapin/compare/v0.4.3...HEAD
+[0.4.3]: https://github.com/lbssousa/omapin/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/lbssousa/omapin/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/lbssousa/omapin/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/lbssousa/omapin/compare/v0.3.1...v0.4.0
