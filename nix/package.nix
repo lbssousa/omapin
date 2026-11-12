@@ -23,6 +23,7 @@ rustPlatform.buildRustPackage {
       ../manifest.json
       ../PinentryDialog.qml
       ../PinentryService.qml
+      ../FieldEditor.js
     ];
   };
 
@@ -37,7 +38,7 @@ rustPlatform.buildRustPackage {
   '';
 
   postInstall = ''
-    install -Dm644 -t $out/share/omapin/plugin manifest.json PinentryDialog.qml PinentryService.qml
+    install -Dm644 -t $out/share/omapin/plugin manifest.json PinentryDialog.qml PinentryService.qml FieldEditor.js
   '';
 
   meta = {

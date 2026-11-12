@@ -37,8 +37,8 @@ gpg-agent ──Assuan (stdin/stdout)──▶ omapin (Rust)
   relays the answer. The connection opened at startup to check that the
   plugin is up carries the first prompt; the plugin closes each connection
   after answering.
-- **The plugin** (`manifest.json` and the QML files at the repository
-  root) is a third-party Omarchy shell plugin of kind
+- **The plugin** (`manifest.json` and the QML and JavaScript files at
+  the repository root) is a third-party Omarchy shell plugin of kind
   `service`. It reuses the shell's own `qs.Commons` (`Color`, `Style`,
   `Border`) and `qs.Ui` (`BorderSurface`, `Button`) instead of copying
   styles. One request is served at a time; a second one gets `busy`. A
@@ -201,7 +201,7 @@ deployed: check it out and verify it against the maintainer's key
 
 | Recipe | What it does |
 |---|---|
-| `just test` | Unit tests, integration tests against a fake dialog, `cargo fmt --check` and clippy |
+| `just test` | Unit tests, integration tests against a fake dialog, the fields' typing (`FieldEditor.js`, with Node), `cargo fmt --check` and clippy |
 | `just test-plugin` | Protocol tests against the real QML plugin in a throwaway Quickshell instance (needs the Wayland session; dialogs flash on screen) |
 | `just fuzz [target] [secs]` | Fuzzes the Assuan session, the dialog-reply parser or the `D`-line encoder with cargo-fuzz (needs nightly Rust and `cargo install cargo-fuzz`) |
 | `just dev` | Runs the dialog in a separate Quickshell instance on its own socket (from `dev/shell.qml`, built in a temporary folder that links the plugin's QML and the shell's `Commons`/`Ui`; the checkout carries no symlinks, which plugins may not have) |

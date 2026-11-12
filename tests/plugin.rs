@@ -29,7 +29,11 @@ impl Drop for Shell {
 fn instance_dir() -> tempfile::TempDir {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
     let dir = tempfile::tempdir().unwrap();
-    for name in ["PinentryService.qml", "PinentryDialog.qml"] {
+    for name in [
+        "PinentryService.qml",
+        "PinentryDialog.qml",
+        "FieldEditor.js",
+    ] {
         symlink(root.join(name), dir.path().join(name)).unwrap();
     }
     for module in ["Commons", "Ui"] {
